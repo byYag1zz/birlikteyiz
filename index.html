@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Birliktelik Süremiz 💜</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, #8e44ad 0%, #5b2c83 35%, #241033 100%);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Arka plan kalpleri */
+    .heart {
+      position: fixed;
+      color: rgba(255,255,255,0.12);
+      font-size: 25px;
+      animation: float 8s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    .heart:nth-child(1) {
+      left: 10%;
+      top: 20%;
+    }
+
+    .heart:nth-child(2) {
+      right: 12%;
+      top: 35%;
+      font-size: 35px;
+      animation-delay: 2s;
+    }
+
+    .heart:nth-child(3) {
+      left: 20%;
+      bottom: 15%;
+      font-size: 40px;
+      animation-delay: 4s;
+    }
+
+    .heart:nth-child(4) {
+      right: 20%;
+      bottom: 20%;
+      animation-delay: 1s;
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-25px);
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+      padding: 40px 20px 80px;
+      text-align: center;
+    }
+
+    .title {
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    .subtitle {
+      opacity: 0.8;
+      margin-bottom: 40px;
+      font-size: 15px;
+    }
+
+    /* Zaman çizgisi */
+    .timeline {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      top: 35px;
+      bottom: 35px;
+      width: 5px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+    }
+
+    .progress-line {
+      position: absolute;
+      top: 35px;
+      width: 5px;
+      background: linear-gradient(#ff5fd2, #c56cff);
+      border-radius: 10px;
+      z-index: 1;
+      transition: height 1s ease;
+    }
+
+    .milestone {
+      position: relative;
+      z-index: 2;
+      margin: 18px 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 27px;
+      background: #3d2155;
+      border: 4px solid rgba(255,255,255,0.25);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      transition: 0.3s;
+    }
+
+    .milestone.active .circle {
+      background: linear-gradient(135deg, #ff4fcf, #9d4edd);
+      border-color: white;
+      box-shadow:
+        0 0 20px rgba(255, 92, 218, 0.8),
+        0 8px 25px rgba(0,0,0,0.3);
+      transform: scale(1.08);
+    }
+
+    .milestone.completed .circle {
+      background: linear-gradient(135deg, #ff4fcf, #9d4edd);
+      border-color: white;
+    }
+
+    .milestone.locked .circle {
+      filter: grayscale(0.3);
+      opacity: 0.65;
+    }
+
+    .label {
+      position: absolute;
+      left: calc(50% + 55px);
+      top: 50%;
+      transform: translateY(-50%);
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    .label strong {
+      display: block;
+      font-size: 17px;
+    }
+
+    .label span {
+      display: block;
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 4px;
+    }
+
+    .current-time {
+      margin-top: 35px;
+      padding: 18px;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px;
+    }
+
+    .current-time .number {
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 5px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      opacity: 0.5;
+      font-size: 12px;
+    }
+
+    @media (max-width: 500px) {
+
+      .title {
+        font-size: 25px;
+      }
+
+      .label {
+        left: calc(50% + 48px);
+      }
+
+      .circle {
+        width: 64px;
+        height: 64px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Arka plan -->
+  <div class="heart">💜</div>
+  <div class="heart">♡</div>
+  <div class="heart">💜</div>
+  <div class="heart">♡</div>
+
+  <div class="container">
+
+    <h1 class="title">BİRLİKTELİK SÜREMİZ</h1>
+
+    <p class="subtitle">
+      Birlikte geçirdiğimiz zamanın hikayesi 💜
+    </p>
+
+    <div class="timeline">
+
+      <div class="progress-line" id="progressLine"></div>
+
+      <!-- 30 GÜN -->
+      <div class="milestone" id="day30">
+        <div class="circle">🔥</div>
+
+        <div class="label">
+          <strong>30. GÜN</strong>
+          <span>İlk dönüm noktamız</span>
+        </div>
+      </div>
+
+      <!-- 6 AY -->
+      <div class="milestone" id="month6">
+        <div class="circle">🔒</div>
+
+        <div class="label">
+          <strong>6. AY</strong>
+          <span>Yaklaşıyoruz...</span>
+        </div>
+      </div>
+
+      <!-- 1 YIL -->
+      <div class="milestone" id="year1">
+        <div class="circle">🔒</div>
+
+        <div class="label">
+          <strong>1. YIL</strong>
+          <span>Birinci yılımız</span>
+        </div>
+      </div>
+
+      <!-- 2 YIL -->
+      <div class="milestone" id="year2">
+        <div class="circle">🔒</div>
+
+        <div class="label">
+          <strong>2. YIL</strong>
+          <span>İki yıl birlikte</span>
+        </div>
+      </div>
+
+      <!-- 3 YIL -->
+      <div class="milestone" id="year3">
+        <div class="circle">🔒</div>
+
+        <div class="label">
+          <strong>3. YIL</strong>
+          <span>Üç yıl birlikte</span>
+        </div>
+      </div>
+
+      <!-- 4 YIL -->
+      <div class="milestone" id="year4">
+        <div class="circle">🔒</div>
+
+        <div class="label">
+          <strong>4. YIL</strong>
+          <span>Dört yıl birlikte</span>
+        </div>
+      </div>
+
+      <!-- SONSUZ -->
+      <div class="milestone" id="forever">
+        <div class="circle">♾️</div>
+
+        <div class="label">
+          <strong>SONSUZA KADAR</strong>
+          <span>♾️</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="current-time">
+      <div>Birlikte geçen günümüz</div>
+      <div class="number" id="daysTogether">0</div>
+    </div>
+
+    <div class="footer">
+      Sonsuza kadar birlikte 💜
+    </div>
+
+  </div>
+
+
+  <script>
+
+    /*
+      BURAYA İLİŞKİNİZİN BAŞLADIĞI TARİHİ YAZ.
+
+      Örnek:
+      20 Eylül 2026 ise:
+
+      const START_DATE = new Date("2026-09-20");
+
+    */
+
+    const START_DATE = new Date("2026-08-21");
+
+
+    function calculateDays() {
+
+      const today = new Date();
+
+      today.setHours(0, 0, 0, 0);
+
+      const start = new Date(START_DATE);
+
+      start.setHours(0, 0, 0, 0);
+
+      const difference = today - start;
+
+      const days = Math.floor(
+        difference / (1000 * 60 * 60 * 24)
+      );
+
+      return Math.max(days, 0);
+    }
+
+
+    function updateTimeline() {
+
+      const days = calculateDays();
+
+      document.getElementById("daysTogether").textContent = days;
+
+
+      const milestones = [
+        {
+          id: "day30",
+          days: 30
+        },
+        {
+          id: "month6",
+          days: 183
+        },
+        {
+          id: "year1",
+          days: 365
+        },
+        {
+          id: "year2",
+          days: 730
+        },
+        {
+          id: "year3",
+          days: 1095
+        },
+        {
+          id: "year4",
+          days: 1460
+        }
+      ];
+
+
+      milestones.forEach((milestone) => {
+
+        const element =
+          document.getElementById(milestone.id);
+
+        const circle =
+          element.querySelector(".circle");
+
+        if (days >= milestone.days) {
+
+          element.classList.add("completed");
+          element.classList.remove("locked");
+
+          circle.textContent = "✓";
+
+        } else {
+
+          element.classList.add("locked");
+
+        }
+
+      });
+
+
+      /*
+        İlerleme çizgisinin uzunluğu
+      */
+
+      const maxDays = 1460;
+
+      const timeline =
+        document.querySelector(".timeline");
+
+      const progress =
+        Math.min(days / maxDays, 1);
+
+      const totalHeight =
+        timeline.offsetHeight - 70;
+
+      document.getElementById("progressLine").style.height =
+        (totalHeight * progress) + "px";
+    }
+
+
+    updateTimeline();
+
+  </script>
+
+</body>
+</html>
